@@ -19,7 +19,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Date" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Description" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id_Employee" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
@@ -175,7 +175,7 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Date" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Description" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Id_Employee" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_Employee" FromRole="IncidentRecord" ToRole="Employee" />
         </EntityType>
@@ -237,7 +237,7 @@
           <End Type="DataBaseForProjectFModel.Employee" Role="Employee" Multiplicity="*" />
           <End Type="DataBaseForProjectFModel.User" Role="User" Multiplicity="*" />
         </Association>
-      </Schema>
+        </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
     <edmx:Mappings>

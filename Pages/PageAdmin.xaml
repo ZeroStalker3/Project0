@@ -72,7 +72,7 @@
                         <DataTemplate>
                             <Button Content="Редактировать" Name="EditIncidentButton" Height="auto" 
                                     Template="{DynamicResource ButtonCornerRadius}"
-                                    Width="auto" Click="EditIncidentButton_Click" Margin="10,0"/>
+                                    Width="auto" Click="EditIncidentButton_Click" Margin="5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -81,7 +81,7 @@
                         <DataTemplate>
                             <Button Content="Удалить" Click="DeleteIncidentButton_Click" 
                                     Template="{DynamicResource ButtonCornerRadius}"
-                                    Name="DeleteIncidentButton" Height="auto" Width="auto" Margin="10,0"/>
+                                    Name="DeleteIncidentButton" Height="auto" Width="auto" Margin="5"/>
                         </DataTemplate>
                     </DataGridTemplateColumn.CellTemplate>
                 </DataGridTemplateColumn>
@@ -96,8 +96,10 @@
                 Width="260" Click="Button_Click" Height="29"/>
 
             <Button Template="{DynamicResource ButtonCornerRadius}" Name="Save" Click="Save_Click"
-                Height="29" Width="260" Margin="0 5 0 5" Content="Сохранить данные"/>
-
+                Height="29" Width="260" Margin="0 5 0 5" Content="Сохранить данные в блокнот"/>
+            
+            <Button Template="{DynamicResource ButtonCornerRadius}" Name="SavePDF" Click="SavePDF_Click"
+                Height="29" Width="260" Margin="0 5 0 5" Content="Сохранить данные в PDF"/>
         </StackPanel>
 
     </Grid>
