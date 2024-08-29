@@ -37,7 +37,7 @@ namespace Project0.Pages
 
         //Set and start the timer
         private void SetTimer()
-        {
+        { 
             DispatcherTimer dispatcherTimer = new DispatcherTimer();
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
