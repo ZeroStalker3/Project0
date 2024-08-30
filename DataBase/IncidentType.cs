@@ -12,15 +12,18 @@ namespace Project0.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class IncidentRecord
+    public partial class IncidentType
     {
-        public int Id { get; set; }
-        public string Date { get; set; }
-        public string Description { get; set; }
-        public int Id_Employee { get; set; }
-        public int Id_Type { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
+        public IncidentType()
+        {
+            this.IncidentRecord = new HashSet<IncidentRecord>();
+        }
     
-        public virtual Employee Employee { get; set; }
-        public virtual IncidentType IncidentType { get; set; }
+        public int Id { get; set; }
+        public string Name { get; set; }
+    
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<IncidentRecord> IncidentRecord { get; set; }
     }
 }

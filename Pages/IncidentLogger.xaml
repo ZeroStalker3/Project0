@@ -5,12 +5,14 @@
       xmlns:d="http://schemas.microsoft.com/expression/blend/2008" 
       xmlns:local="clr-namespace:Project0.Pages"
       mc:Ignorable="d" 
-            Height="350" Width="400"
+            Height="400" Width="400"
       Title="IncidentLogger">
-
-    <Grid Margin="10"
+    
+    <Grid Margin="5"
           Background="White">
         <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
             <RowDefinition Height="Auto"/>
@@ -19,15 +21,17 @@
             <RowDefinition Height="50"/>
             <RowDefinition Height="Auto"/>
         </Grid.RowDefinitions>
-
+        
         <TextBlock Text="Дата и время:" Margin="0,0,0,5"/>
-        <DatePicker x:Name="IncidentDate" Grid.Row="1"/>
+        <DatePicker SelectedDateFormat="Short"  x:Name="IncidentDate" Grid.Row="1"/>
         <TextBlock Text="Описание:" Grid.Row="2" Margin="0,10,0,5"/>
         <TextBox x:Name="IncidentDescription" Grid.Row="3" Height="100" TextWrapping="Wrap" VerticalScrollBarVisibility="Auto"/>
         <TextBlock Text="Задействованные сотрудники:" Grid.Row="4" Margin="0,10,0,5"/>
         <ComboBox x:Name="IncidentEmployees" Grid.Row="5" Height="50" />
+        <TextBlock Grid.Row="6" Text="Тип инцидента:" Margin="0 10 0 5"/>
+        <ComboBox x:Name="IncidentType" Grid.Row="7" Height="50"/>
         <DockPanel
-             Grid.Row="6">
+             Grid.Row="8">
             <Button Content="Добавить запись" Template="{DynamicResource ButtonCornerRadius}" Name="AddIncidentButton" Width="200" Height="auto" Margin="0,10,5,0" Click="AddIncidentButton_Click"/>
             <Button Content="Назад" Name="Back" Template="{DynamicResource ButtonCornerRadius}" Click="Back_Click" Width="auto" Height="auto" Margin="5,10,0,0" />
         </DockPanel>

@@ -23,6 +23,7 @@ namespace Project0.PagesSecondaires
     public partial class PageEditIncident : Page
     {
         string employees;
+        string type;
         int incidentId;
 
         public PageEditIncident(IncidentRecord incidentRecord)
@@ -46,6 +47,10 @@ namespace Project0.PagesSecondaires
             IncidentEmployees.DisplayMemberPath = "Name";
             IncidentEmployees.SelectedValuePath = "Id";
             IncidentEmployees.ItemsSource = OdbConnecHelper.entObj.Employee.ToList();
+
+            IncidentType.DisplayMemberPath = "Name";
+            IncidentType.SelectedValuePath = "Id";
+            IncidentType.ItemsSource = OdbConnecHelper.entObj.IncidentType.ToList();
         }
 
         private void Back_Click(object sender, RoutedEventArgs e)
@@ -61,9 +66,9 @@ namespace Project0.PagesSecondaires
             string description = IncidentDescription.Text;
 
             employees = Convert.ToString(IncidentEmployees.SelectedValue);
-
+            type = Convert.ToString(IncidentType.SelectedValue);
             // Проверка на пустые значения
-            if (string.IsNullOrWhiteSpace(description) || string.IsNullOrWhiteSpace(employees))
+            if (string.IsNullOrWhiteSpace(description) || string.IsNullOrWhiteSpace(employees) || string.IsNullOrWhiteSpace(type))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -81,6 +86,7 @@ namespace Project0.PagesSecondaires
             incident.Date = IncidentDate.Text;
             incident.Description = description;
             incident.Id_Employee = int.Parse(employees); // employees - это ID сотрудника
+            incident.Id_Type = int.Parse(type);
 
             // Сохранение изменений
             try

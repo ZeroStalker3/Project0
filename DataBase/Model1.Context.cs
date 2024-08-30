@@ -27,6 +27,7 @@ namespace Project0.DataBase
     
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<IncidentRecord> IncidentRecord { get; set; }
+        public virtual DbSet<IncidentType> IncidentType { get; set; }
         public virtual DbSet<Role> Role { get; set; }
         public virtual DbSet<sysdiagrams> sysdiagrams { get; set; }
         public virtual DbSet<User> User { get; set; }

@@ -23,7 +23,7 @@ namespace Project0.Pages
     public partial class IncidentLogger : Page
     {
         string employees;
-
+        string type;
         public IncidentLogger()
         {
             InitializeComponent();
@@ -38,6 +38,10 @@ namespace Project0.Pages
             IncidentEmployees.DisplayMemberPath = "Name";
             IncidentEmployees.SelectedValuePath = "Id";
             IncidentEmployees.ItemsSource = OdbConnecHelper.entObj.Employee.ToList();
+
+            IncidentType.DisplayMemberPath = "Name";
+            IncidentType.SelectedValuePath= "Id";
+            IncidentType.ItemsSource = OdbConnecHelper.entObj.IncidentType.ToList();
         }
 
         private void AddIncidentButton_Click(object sender, RoutedEventArgs e)
@@ -47,10 +51,10 @@ namespace Project0.Pages
                 IncidentDate.SelectedDate.Value.ToString("g") : "Дата не выбрана";
             string description = IncidentDescription.Text;
 
-
+            type = Convert.ToString(IncidentType.SelectedValue);
             employees = Convert.ToString(IncidentEmployees.SelectedValue);
             //MessageBox.Show(employees); //Для проверки какой ID пользователя
-            if (string.IsNullOrWhiteSpace(description) || string.IsNullOrWhiteSpace(employees))
+            if (string.IsNullOrWhiteSpace(description) || string.IsNullOrWhiteSpace(employees) || string.IsNullOrWhiteSpace(type))
             {
                 MessageBox.Show("Пожалуйста, заполните все поля.", "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
                 return;
@@ -61,7 +65,8 @@ namespace Project0.Pages
             {
                 Date = date,
                 Description = description,
-                Id_Employee = Convert.ToInt32(employees)
+                Id_Employee = Convert.ToInt32(employees),
+                Id_Type = Convert.ToInt32(type)
             };
 
             // Вставьте код для сохранения записи, например, в базу данных или файл

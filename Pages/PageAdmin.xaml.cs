@@ -8,17 +8,8 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
-using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Project0.Pages
@@ -28,29 +19,33 @@ namespace Project0.Pages
     /// </summary>
     public partial class PageAdmin : Page
     {
-
+        DispatcherTimer dispatcherTimer = new DispatcherTimer();
         List<IncidentRecord> _incidentRecords = new List<IncidentRecord>();
 
         public PageAdmin()
         {
             InitializeComponent();
 
-            SetTimer();
             IncidentListBox.ItemsSource = OdbConnecHelper.entObj.IncidentRecord.ToList();
         }
 
-        //Set and start the timer
+        //Set and start and stop the timer 
         private void SetTimer()
-        { 
-            DispatcherTimer dispatcherTimer = new DispatcherTimer();
+        {
             dispatcherTimer.Tick += new EventHandler(dispatcherTimer_Tick);
             dispatcherTimer.Interval = new TimeSpan(0, 0, 1);
             dispatcherTimer.Start();
         }
 
+        private void StopTimer()
+        {
+            dispatcherTimer.Stop();
+        }
+        //End set and start and stop the timer
+
         private void dispatcherTimer_Tick(object sender, EventArgs e)
         {
-            IncidentListBox.ItemsSource = OdbConnecHelper.entObj.IncidentRecord.ToList();   
+            IncidentListBox.ItemsSource = OdbConnecHelper.entObj.IncidentRecord.ToList();
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
@@ -64,7 +59,8 @@ namespace Project0.Pages
 
             var filteredRecords = OdbConnecHelper.entObj.IncidentRecord
                 .Where(r => r.Description.ToLower().Contains(query) ||
-                            r.Employee.Name.ToLower().Contains(query)) // Поиск по имени сотрудника
+                            r.Employee.Name.ToLower().Contains(query) || 
+                            r.IncidentType.Name.ToLower().Contains(query)) // Поиск по имени сотрудника, типу
                 .ToList();
 
             IncidentListBox.ItemsSource = filteredRecords;
@@ -81,7 +77,7 @@ namespace Project0.Pages
             }
             else
             {
-                MessageBox.Show("Пожалуйста, выбер5ите дату для фильтрации.",
+                MessageBox.Show("Пожалуйста, выберите дату для фильтрации.",
                     "Ошибка", MessageBoxButton.OK, MessageBoxImage.Warning);
             }
         }
@@ -276,6 +272,56 @@ namespace Project0.Pages
                 SaveDataToPdf(saveFileDialog.FileName);
                 MessageBox.Show("Данные успешно сохранены в PDF.");
             }
+        }
+
+        private void Test()
+        {
+            //private void GroupRecords(string groupBy)
+            //{
+            //    var collectionView = CollectionViewSource.GetDefaultView(IncidentListBox.ItemsSource);
+
+            //    collectionView.GroupDescriptions.Clear();
+
+            //    switch (groupBy)
+            //    {
+            //        case "Date":
+            //            collectionView.GroupDescriptions.Add(new PropertyGroupDescription("Date"));
+            //            break;
+            //        case "IncidentType":
+            //            collectionView.GroupDescriptions.Add(new PropertyGroupDescription("Description"));
+            //            break;
+            //        case "Employee":
+            //            collectionView.GroupDescriptions.Add(new PropertyGroupDescription("Name"));
+            //            break;
+            //        default:
+            //            break;
+            //    }
+            //}
+
+            //private void GroupByDate_Click(object sender, RoutedEventArgs e)
+            //{
+            //    GroupRecords("Date");
+            //}
+
+            //private void GroupByIncidentType_Click(object sender, RoutedEventArgs e)
+            //{
+            //    GroupRecords("IncidentType");
+            //}
+
+            //private void GroupByEmployee_Click(object sender, RoutedEventArgs e)
+            //{
+            //    GroupRecords("Employee");
+            //}
+        }
+
+        private void On_Click(object sender, RoutedEventArgs e)
+        {
+            SetTimer();
+        }
+
+        private void Off_Click(object sender, RoutedEventArgs e)
+        {
+            StopTimer();
         }
     }
 }

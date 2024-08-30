@@ -21,6 +21,14 @@
           <Property Name="Date" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Description" Type="nvarchar(max)" Nullable="false" />
           <Property Name="Id_Employee" Type="int" Nullable="false" />
+          <Property Name="Id_Type" Type="int" Nullable="false" />
+        </EntityType>
+        <EntityType Name="IncidentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -71,6 +79,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IncidentRecord_IncidentType">
+          <End Role="IncidentType" Type="Self.IncidentType" Multiplicity="1" />
+          <End Role="IncidentRecord" Type="Self.IncidentRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncidentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IncidentRecord">
+              <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Employee_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="User_Employee" Type="Self.User_Employee" Multiplicity="*" />
@@ -110,6 +130,7 @@
         <EntityContainer Name="Хранилище DataBaseForProjectFModelContainer">
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidentRecord" EntityType="Self.IncidentRecord" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="IncidentType" EntityType="Self.IncidentType" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -121,6 +142,10 @@
           </EntitySet>
           <AssociationSet Name="FK_IncidentRecord_Employee" Association="Self.FK_IncidentRecord_Employee">
             <End Role="Employee" EntitySet="Employee" />
+            <End Role="IncidentRecord" EntitySet="IncidentRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IncidentRecord_IncidentType" Association="Self.FK_IncidentRecord_IncidentType">
+            <End Role="IncidentType" EntitySet="IncidentType" />
             <End Role="IncidentRecord" EntitySet="IncidentRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Employee_Employee" Association="Self.FK_User_Employee_Employee">
@@ -143,11 +168,16 @@
         <EntityContainer Name="DataBaseForProjectFEntities" annotation:LazyLoadingEnabled="true">
           <EntitySet Name="Employee" EntityType="DataBaseForProjectFModel.Employee" />
           <EntitySet Name="IncidentRecord" EntityType="DataBaseForProjectFModel.IncidentRecord" />
+          <EntitySet Name="IncidentType" EntityType="DataBaseForProjectFModel.IncidentType" />
           <EntitySet Name="Role" EntityType="DataBaseForProjectFModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="DataBaseForProjectFModel.sysdiagrams" />
           <EntitySet Name="User" EntityType="DataBaseForProjectFModel.User" />
           <AssociationSet Name="FK_IncidentRecord_Employee" Association="DataBaseForProjectFModel.FK_IncidentRecord_Employee">
             <End Role="Employee" EntitySet="Employee" />
+            <End Role="IncidentRecord" EntitySet="IncidentRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_IncidentRecord_IncidentType" Association="DataBaseForProjectFModel.FK_IncidentRecord_IncidentType">
+            <End Role="IncidentType" EntitySet="IncidentType" />
             <End Role="IncidentRecord" EntitySet="IncidentRecord" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Role" Association="DataBaseForProjectFModel.FK_User_Role">
@@ -177,7 +207,17 @@
           <Property Name="Date" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Id_Employee" Type="Int32" Nullable="false" />
+          <Property Name="Id_Type" Type="Int32" Nullable="false" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_Employee" FromRole="IncidentRecord" ToRole="Employee" />
+          <NavigationProperty Name="IncidentType" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_IncidentType" FromRole="IncidentRecord" ToRole="IncidentType" />
+        </EntityType>
+        <EntityType Name="IncidentType">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="IncidentRecord" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_IncidentType" FromRole="IncidentType" ToRole="IncidentRecord" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -221,6 +261,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_IncidentRecord_IncidentType">
+          <End Type="DataBaseForProjectFModel.IncidentType" Role="IncidentType" Multiplicity="1" />
+          <End Type="DataBaseForProjectFModel.IncidentRecord" Role="IncidentRecord" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncidentType">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="IncidentRecord">
+              <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Role">
           <End Type="DataBaseForProjectFModel.Role" Role="Role" Multiplicity="1" />
           <End Type="DataBaseForProjectFModel.User" Role="User" Multiplicity="*" />
@@ -255,9 +307,18 @@
           <EntitySetMapping Name="IncidentRecord">
             <EntityTypeMapping TypeName="DataBaseForProjectFModel.IncidentRecord">
               <MappingFragment StoreEntitySet="IncidentRecord">
+                <ScalarProperty Name="Id_Type" ColumnName="Id_Type" />
                 <ScalarProperty Name="Id_Employee" ColumnName="Id_Employee" />
                 <ScalarProperty Name="Description" ColumnName="Description" />
                 <ScalarProperty Name="Date" ColumnName="Date" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="IncidentType">
+            <EntityTypeMapping TypeName="DataBaseForProjectFModel.IncidentType">
+              <MappingFragment StoreEntitySet="IncidentType">
+                <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>
