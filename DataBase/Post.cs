@@ -12,23 +12,18 @@ namespace Project0.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class Employee
+    public partial class Post
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public Employee()
+        public Post()
         {
-            this.IncidentRecord = new HashSet<IncidentRecord>();
-            this.User = new HashSet<User>();
+            this.Employee = new HashSet<Employee>();
         }
     
         public int Id { get; set; }
-        public string Name { get; set; }
-        public int Id_Post { get; set; }
+        public string Nam { get; set; }
     
-        public virtual Post Post { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<IncidentRecord> IncidentRecord { get; set; }
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<User> User { get; set; }
+        public virtual ICollection<Employee> Employee { get; set; }
     }
 }

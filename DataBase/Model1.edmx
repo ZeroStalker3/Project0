@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Post" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Post" Type="int" Nullable="false" />
         </EntityType>
         <EntityType Name="IncidentRecord">
           <Key>
@@ -29,6 +29,13 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="Nam" Type="nvarchar" MaxLength="50" Nullable="false" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -67,6 +74,18 @@
           <Property Name="Id_User" Type="int" Nullable="false" />
           <Property Name="Id_employee" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_Employee_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
+          <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Id_Post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IncidentRecord_Employee">
           <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
           <End Role="IncidentRecord" Type="Self.IncidentRecord" Multiplicity="*" />
@@ -131,6 +150,7 @@
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidentRecord" EntityType="Self.IncidentRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidentType" EntityType="Self.IncidentType" Schema="dbo" store:Type="Tables" />
+          <EntitySet Name="Post" EntityType="Self.Post" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Role" EntityType="Self.Role" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="sysdiagrams" EntityType="Self.sysdiagrams" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="User" EntityType="Self.User" Schema="dbo" store:Type="Tables" />
@@ -140,6 +160,10 @@
     [User_Employee].[Id_employee] AS [Id_employee]
     FROM [dbo].[User_Employee] AS [User_Employee]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_IncidentRecord_Employee" Association="Self.FK_IncidentRecord_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="IncidentRecord" EntitySet="IncidentRecord" />
@@ -169,9 +193,14 @@
           <EntitySet Name="Employee" EntityType="DataBaseForProjectFModel.Employee" />
           <EntitySet Name="IncidentRecord" EntityType="DataBaseForProjectFModel.IncidentRecord" />
           <EntitySet Name="IncidentType" EntityType="DataBaseForProjectFModel.IncidentType" />
+          <EntitySet Name="Post" EntityType="DataBaseForProjectFModel.Post" />
           <EntitySet Name="Role" EntityType="DataBaseForProjectFModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="DataBaseForProjectFModel.sysdiagrams" />
           <EntitySet Name="User" EntityType="DataBaseForProjectFModel.User" />
+          <AssociationSet Name="FK_Employee_Post" Association="DataBaseForProjectFModel.FK_Employee_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="Employee" EntitySet="Employee" />
+          </AssociationSet>
           <AssociationSet Name="FK_IncidentRecord_Employee" Association="DataBaseForProjectFModel.FK_IncidentRecord_Employee">
             <End Role="Employee" EntitySet="Employee" />
             <End Role="IncidentRecord" EntitySet="IncidentRecord" />
@@ -195,7 +224,8 @@
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Post" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Post" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Post" Relationship="DataBaseForProjectFModel.FK_Employee_Post" FromRole="Employee" ToRole="Post" />
           <NavigationProperty Name="IncidentRecord" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_Employee" FromRole="Employee" ToRole="IncidentRecord" />
           <NavigationProperty Name="User" Relationship="DataBaseForProjectFModel.User_Employee" FromRole="Employee" ToRole="User" />
         </EntityType>
@@ -218,6 +248,14 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="IncidentRecord" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_IncidentType" FromRole="IncidentType" ToRole="IncidentRecord" />
+        </EntityType>
+        <EntityType Name="Post">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="Nam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.FK_Employee_Post" FromRole="Post" ToRole="Employee" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -249,6 +287,18 @@
           <NavigationProperty Name="Role" Relationship="DataBaseForProjectFModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.User_Employee" FromRole="User" ToRole="Employee" />
         </EntityType>
+        <Association Name="FK_Employee_Post">
+          <End Type="DataBaseForProjectFModel.Post" Role="Post" Multiplicity="1" />
+          <End Type="DataBaseForProjectFModel.Employee" Role="Employee" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="Employee">
+              <PropertyRef Name="Id_Post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_IncidentRecord_Employee">
           <End Type="DataBaseForProjectFModel.Employee" Role="Employee" Multiplicity="1" />
           <End Type="DataBaseForProjectFModel.IncidentRecord" Role="IncidentRecord" Multiplicity="*" />
@@ -298,7 +348,7 @@
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="DataBaseForProjectFModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
-                <ScalarProperty Name="Post" ColumnName="Post" />
+                <ScalarProperty Name="Id_Post" ColumnName="Id_Post" />
                 <ScalarProperty Name="Name" ColumnName="Name" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
@@ -319,6 +369,14 @@
             <EntityTypeMapping TypeName="DataBaseForProjectFModel.IncidentType">
               <MappingFragment StoreEntitySet="IncidentType">
                 <ScalarProperty Name="Name" ColumnName="Name" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
+          <EntitySetMapping Name="Post">
+            <EntityTypeMapping TypeName="DataBaseForProjectFModel.Post">
+              <MappingFragment StoreEntitySet="Post">
+                <ScalarProperty Name="Nam" ColumnName="Nam" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
               </MappingFragment>
             </EntityTypeMapping>

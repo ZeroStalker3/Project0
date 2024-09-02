@@ -8,21 +8,30 @@ using System;
 using System.Collections.Generic;
 using System.IO;
 using System.Linq;
+using System.Text;
+using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
+using System.Windows.Data;
+using System.Windows.Documents;
+using System.Windows.Input;
+using System.Windows.Media;
+using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
+using System.Windows.Shapes;
 using System.Windows.Threading;
 
 namespace Project0.Pages
 {
     /// <summary>
-    /// Логика взаимодействия для PageAdmin.xaml
+    /// Логика взаимодействия для PageMain.xaml
     /// </summary>
-    public partial class PageAdmin : Page
+    public partial class PageMain : Page
     {
         DispatcherTimer dispatcherTimer = new DispatcherTimer();
         List<IncidentRecord> _incidentRecords = new List<IncidentRecord>();
 
-        public PageAdmin()
+        public PageMain()
         {
             InitializeComponent();
 
@@ -59,7 +68,7 @@ namespace Project0.Pages
 
             var filteredRecords = OdbConnecHelper.entObj.IncidentRecord
                 .Where(r => r.Description.ToLower().Contains(query) ||
-                            r.Employee.Name.ToLower().Contains(query) || 
+                            r.Employee.Name.ToLower().Contains(query) ||
                             r.IncidentType.Name.ToLower().Contains(query)) // Поиск по имени сотрудника, типу
                 .ToList();
 
@@ -322,11 +331,6 @@ namespace Project0.Pages
         private void Off_Click(object sender, RoutedEventArgs e)
         {
             StopTimer();
-        }
-
-        private void AddEmployess_Click(object sender, RoutedEventArgs e)
-        {
-            FrameApp.frmObj.Navigate(new PageAddNewEmployee());
         }
     }
 }
