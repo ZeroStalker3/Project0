@@ -18,6 +18,7 @@ namespace Project0.DataBase
         public Post()
         {
             this.Employee = new HashSet<Employee>();
+            this.User = new HashSet<User>();
         }
     
         public int Id { get; set; }
@@ -25,5 +26,7 @@ namespace Project0.DataBase
     
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<Employee> Employee { get; set; }
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<User> User { get; set; }
     }
 }

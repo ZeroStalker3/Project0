@@ -79,7 +79,6 @@
                     Width="*" Header="Описание" Binding="{Binding Description}"/>
                 <DataGridTextColumn
                     Width="*" Header="Сотрудник" Binding="{Binding Employee.Name}"/>
-                <DataGridTextColumn Width="*" Header="Положение" Binding="{Binding Employee.Post}"/>
                 <DataGridTemplateColumn>
                     <DataGridTemplateColumn.CellTemplate>
                         <DataTemplate>

@@ -63,6 +63,7 @@
           <Property Name="IdRole" Type="int" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
+          <Property Name="Id_Post" Type="int" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "DataBaseForProjectF.dbo.User_Employee" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -134,6 +135,18 @@
             </Dependent>
           </ReferentialConstraint>
         </Association>
+        <Association Name="FK_User_Post">
+          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="User" Type="Self.User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Id_Post" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_User_Role">
           <End Role="Role" Type="Self.Role" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
@@ -180,6 +193,10 @@
             <End Role="User" EntitySet="User" />
             <End Role="User_Employee" EntitySet="User_Employee" />
           </AssociationSet>
+          <AssociationSet Name="FK_User_Post" Association="Self.FK_User_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="User" EntitySet="User" />
+          </AssociationSet>
           <AssociationSet Name="FK_User_Role" Association="Self.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
             <End Role="User" EntitySet="User" />
@@ -208,6 +225,10 @@
           <AssociationSet Name="FK_IncidentRecord_IncidentType" Association="DataBaseForProjectFModel.FK_IncidentRecord_IncidentType">
             <End Role="IncidentType" EntitySet="IncidentType" />
             <End Role="IncidentRecord" EntitySet="IncidentRecord" />
+          </AssociationSet>
+          <AssociationSet Name="FK_User_Post" Association="DataBaseForProjectFModel.FK_User_Post">
+            <End Role="Post" EntitySet="Post" />
+            <End Role="User" EntitySet="User" />
           </AssociationSet>
           <AssociationSet Name="FK_User_Role" Association="DataBaseForProjectFModel.FK_User_Role">
             <End Role="Role" EntitySet="Role" />
@@ -256,6 +277,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Nam" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.FK_Employee_Post" FromRole="Post" ToRole="Employee" />
+          <NavigationProperty Name="User" Relationship="DataBaseForProjectFModel.FK_User_Post" FromRole="Post" ToRole="User" />
         </EntityType>
         <EntityType Name="Role">
           <Key>
@@ -284,6 +306,8 @@
           <Property Name="IdRole" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
+          <Property Name="Id_Post" Type="Int32" />
+          <NavigationProperty Name="Post" Relationship="DataBaseForProjectFModel.FK_User_Post" FromRole="User" ToRole="Post" />
           <NavigationProperty Name="Role" Relationship="DataBaseForProjectFModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.User_Employee" FromRole="User" ToRole="Employee" />
         </EntityType>
@@ -320,6 +344,18 @@
             </Principal>
             <Dependent Role="IncidentRecord">
               <PropertyRef Name="Id_Type" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_User_Post">
+          <End Type="DataBaseForProjectFModel.Post" Role="Post" Multiplicity="0..1" />
+          <End Type="DataBaseForProjectFModel.User" Role="User" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Post">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="User">
+              <PropertyRef Name="Id_Post" />
             </Dependent>
           </ReferentialConstraint>
         </Association>
@@ -403,6 +439,7 @@
           <EntitySetMapping Name="User">
             <EntityTypeMapping TypeName="DataBaseForProjectFModel.User">
               <MappingFragment StoreEntitySet="User">
+                <ScalarProperty Name="Id_Post" ColumnName="Id_Post" />
                 <ScalarProperty Name="Login" ColumnName="Login" />
                 <ScalarProperty Name="Password" ColumnName="Password" />
                 <ScalarProperty Name="IdRole" ColumnName="IdRole" />

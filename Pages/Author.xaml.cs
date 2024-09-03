@@ -1,19 +1,10 @@
 ﻿using Project0.ClassHelper;
 using Project0.DataBase;
 using System;
-using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Navigation;
-using System.Windows.Shapes;
 
 namespace Project0.Pages
 {
@@ -57,6 +48,7 @@ namespace Project0.Pages
                 try
                 {
                     var userObj = OdbConnecHelper.entObj.User.FirstOrDefault(x => x.Password == PasswordTxt.Password && x.Login == LoginTxt.Text);
+
                     if (userObj == null)
                     {
                         MessageBox.Show("Что-то пошло не так!",
@@ -67,13 +59,26 @@ namespace Project0.Pages
                     }
                     else
                     {
-                        MessageBox.Show("Добро пожаловать в систему",
-                            "Приветствую",
-                            MessageBoxButton.OK,
-                            MessageBoxImage.Asterisk);
-                        FrameApp.frmObj.Navigate(new PageAdmin());
-                        PasswordTxt.Password = null;
-                        LoginTxt.Text = null;
+                        if (userObj.Id_Post == 5 || userObj.Id_Post == 6)
+                        {
+                            MessageBox.Show("Добро пожаловать в систему",
+                                "Приветствую",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Asterisk);
+                            FrameApp.frmObj.Navigate(new PageAdmin());
+                            PasswordTxt.Password = null;
+                            LoginTxt.Text = null;
+                        }
+                        else
+                        {
+                            MessageBox.Show("Добро пожаловать в систему",
+                                "Приветствую",
+                                MessageBoxButton.OK,
+                                MessageBoxImage.Asterisk);
+                            FrameApp.frmObj.Navigate(new PageMain());
+                            PasswordTxt.Password = null;
+                            LoginTxt.Text = null;
+                        }
                     }
                 }
                 catch (Exception ex)
