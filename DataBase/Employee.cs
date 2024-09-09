@@ -17,6 +17,7 @@ namespace Project0.DataBase
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Employee()
         {
+            this.ActionLog = new HashSet<ActionLog>();
             this.IncidentRecord = new HashSet<IncidentRecord>();
             this.User = new HashSet<User>();
         }
@@ -25,6 +26,8 @@ namespace Project0.DataBase
         public string Name { get; set; }
         public int Id_Post { get; set; }
     
+        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
+        public virtual ICollection<ActionLog> ActionLog { get; set; }
         public virtual Post Post { get; set; }
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
         public virtual ICollection<IncidentRecord> IncidentRecord { get; set; }

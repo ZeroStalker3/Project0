@@ -104,14 +104,14 @@
                 Grid.Row="2" Grid.Column="2">
             <Button Template="{DynamicResource ButtonCornerRadius}" Content="Добавление нового сотрудника"
                     Width="260" Padding="2" Height="30" Name="AddEmployess" Click="AddEmployess_Click" Margin="0 5 0 5"/>
+            <Button Template="{DynamicResource ButtonCornerRadius}" Content="История действий" 
+                    Width="260" Height="30" Name="ActionLog" Click="ActionLog_Click" Margin="0 5 0 5"/>
             <Button Content="Перейти к вводу инцидентов" 
                 Template="{DynamicResource ButtonCornerRadius}"
                 HorizontalAlignment="Center" Margin="0,5,0,5" VerticalAlignment="Top" 
                 Width="260" Click="Button_Click" Height="30"/>
-
             <Button Template="{DynamicResource ButtonCornerRadius}" Name="Save" Click="Save_Click"
                 Height="29" Width="260" Margin="0 5 0 5" Content="Сохранить данные в блокнот"/>
-
             <Button Template="{DynamicResource ButtonCornerRadius}" Name="SavePDF" Click="SavePDF_Click"
                 Height="29" Width="260" Margin="0 5 0 5" Content="Сохранить данные в PDF"/>
         </StackPanel>

@@ -25,6 +25,7 @@ namespace Project0.DataBase
             throw new UnintentionalCodeFirstException();
         }
     
+        public virtual DbSet<ActionLog> ActionLog { get; set; }
         public virtual DbSet<Employee> Employee { get; set; }
         public virtual DbSet<IncidentRecord> IncidentRecord { get; set; }
         public virtual DbSet<IncidentType> IncidentType { get; set; }

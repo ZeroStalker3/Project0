@@ -32,18 +32,6 @@
                 Grid.Column="0"
                 Grid.Row="0"
                 Source="/Images/0.png" />
-            <Button Template="{DynamicResource ButtonCornerRadius}"
-                    Grid.Column="2"
-                    Grid.Row="0"
-        VerticalAlignment="Center"
-        HorizontalAlignment="Center"
-        Margin="5 10 10 10"
-                Height="50"
-                
-                Width="150"
-                    Name="Auth"
-                    Click="Auth_Click"
-        Content="Авторизация"/>
             <!--<Frame x:Name="MainFrm"
                    Grid.Column="0"
                    Grid.ColumnSpan="3"

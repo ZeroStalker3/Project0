@@ -328,5 +328,10 @@ namespace Project0.Pages
         {
             FrameApp.frmObj.Navigate(new PageAddNewEmployee());
         }
+
+        private void ActionLog_Click(object sender, RoutedEventArgs e)
+        {
+            FrameApp.frmObj.Navigate(new ActionLog());
+        }
     }
 }

@@ -32,9 +32,5 @@ namespace Project0
             OdbConnecHelper.entObj = new DataBaseForProjectFEntities();
             FrameApp.frmObj.Navigate(new Author());
         }
-
-        private void Auth_Click(object sender, RoutedEventArgs e)
-        {
-        }
     }
 }

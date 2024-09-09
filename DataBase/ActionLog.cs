@@ -12,23 +12,17 @@ namespace Project0.DataBase
     using System;
     using System.Collections.Generic;
     
-    public partial class IncidentRecord
+    public partial class ActionLog
     {
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
-        public IncidentRecord()
-        {
-            this.ActionLog = new HashSet<ActionLog>();
-        }
-    
         public int Id { get; set; }
-        public string Date { get; set; }
-        public string Description { get; set; }
-        public int Id_Employee { get; set; }
-        public int Id_Type { get; set; }
+        public string ActionDescription { get; set; }
+        public System.DateTime ActionDate { get; set; }
+        public int Id_User { get; set; }
+        public int Id_Incident { get; set; }
+        public int Id_employee { get; set; }
     
-        [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2227:CollectionPropertiesShouldBeReadOnly")]
-        public virtual ICollection<ActionLog> ActionLog { get; set; }
         public virtual Employee Employee { get; set; }
-        public virtual IncidentType IncidentType { get; set; }
+        public virtual IncidentRecord IncidentRecord { get; set; }
+        public virtual User User { get; set; }
     }
 }

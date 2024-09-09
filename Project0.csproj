@@ -155,6 +155,11 @@
     </Compile>
     <Compile Include="ClassHelper\FrameApp.cs" />
     <Compile Include="ClassHelper\FrameApp1.cs" />
+    <Compile Include="ClassHelper\IncidentService.cs" />
+    <Compile Include="ClassHelper\LogService.cs" />
+    <Compile Include="DataBase\ActionLog.cs">
+      <DependentUpon>Model1.tt</DependentUpon>
+    </Compile>
     <Compile Include="DataBase\Employee.cs">
       <DependentUpon>Model1.tt</DependentUpon>
     </Compile>
@@ -204,6 +209,10 @@
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>
+    <Page Include="Pages\ActionLog.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
     <Page Include="Pages\AddEmployee.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
@@ -231,6 +240,9 @@
     </Compile>
     <Compile Include="PagesSecondaires\PageEditIncident.xaml.cs">
       <DependentUpon>PageEditIncident.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Pages\ActionLog.xaml.cs">
+      <DependentUpon>ActionLog.xaml</DependentUpon>
     </Compile>
     <Compile Include="Pages\AddEmployee.xaml.cs">
       <DependentUpon>AddEmployee.xaml</DependentUpon>

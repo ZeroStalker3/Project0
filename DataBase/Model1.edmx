@@ -5,6 +5,17 @@
     <!-- SSDL content -->
     <edmx:StorageModels>
     <Schema Namespace="Хранилище DataBaseForProjectFModel" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
+        <EntityType Name="ActionLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
+          <Property Name="ActionDescription" Type="nvarchar" MaxLength="500" Nullable="false" />
+          <Property Name="ActionDate" Type="datetime" Nullable="false" />
+          <Property Name="Id_User" Type="int" Nullable="false" />
+          <Property Name="Id_Incident" Type="int" Nullable="false" />
+          <Property Name="Id_employee" Type="int" Nullable="false" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -63,7 +74,7 @@
           <Property Name="IdRole" Type="int" Nullable="false" />
           <Property Name="Password" Type="nvarchar" MaxLength="50" Nullable="false" />
           <Property Name="Login" Type="nvarchar" MaxLength="50" Nullable="false" />
-          <Property Name="Id_Post" Type="int" />
+          <Property Name="Id_Post" Type="int" Nullable="false" />
         </EntityType>
         <!--Ошибки, обнаруженные при создании:
 предупреждение 6002: В таблице или представлении "DataBaseForProjectF.dbo.User_Employee" не определен первичный ключ. Ключ был выведен, а определение таблицы или представления было создано в режиме только для чтения.-->
@@ -75,6 +86,42 @@
           <Property Name="Id_User" Type="int" Nullable="false" />
           <Property Name="Id_employee" Type="int" Nullable="false" />
         </EntityType>
+        <Association Name="FK_ActionLog_Employee">
+          <End Role="Employee" Type="Self.Employee" Multiplicity="1" />
+          <End Role="ActionLog" Type="Self.ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActionLog">
+              <PropertyRef Name="Id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionLog_IncidentRecord">
+          <End Role="IncidentRecord" Type="Self.IncidentRecord" Multiplicity="1" />
+          <End Role="ActionLog" Type="Self.ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncidentRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActionLog">
+              <PropertyRef Name="Id_Incident" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionLog_User">
+          <End Role="User" Type="Self.User" Multiplicity="1" />
+          <End Role="ActionLog" Type="Self.ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActionLog">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Post">
           <End Role="Post" Type="Self.Post" Multiplicity="1" />
           <End Role="Employee" Type="Self.Employee" Multiplicity="*" />
@@ -136,7 +183,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Post">
-          <End Role="Post" Type="Self.Post" Multiplicity="0..1" />
+          <End Role="Post" Type="Self.Post" Multiplicity="1" />
           <End Role="User" Type="Self.User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Post">
@@ -160,6 +207,7 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="Хранилище DataBaseForProjectFModelContainer">
+          <EntitySet Name="ActionLog" EntityType="Self.ActionLog" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="Employee" EntityType="Self.Employee" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidentRecord" EntityType="Self.IncidentRecord" Schema="dbo" store:Type="Tables" />
           <EntitySet Name="IncidentType" EntityType="Self.IncidentType" Schema="dbo" store:Type="Tables" />
@@ -173,6 +221,18 @@
     [User_Employee].[Id_employee] AS [Id_employee]
     FROM [dbo].[User_Employee] AS [User_Employee]</DefiningQuery>
           </EntitySet>
+          <AssociationSet Name="FK_ActionLog_Employee" Association="Self.FK_ActionLog_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ActionLog" EntitySet="ActionLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionLog_IncidentRecord" Association="Self.FK_ActionLog_IncidentRecord">
+            <End Role="IncidentRecord" EntitySet="IncidentRecord" />
+            <End Role="ActionLog" EntitySet="ActionLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionLog_User" Association="Self.FK_ActionLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ActionLog" EntitySet="ActionLog" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_Post" Association="Self.FK_Employee_Post">
             <End Role="Post" EntitySet="Post" />
             <End Role="Employee" EntitySet="Employee" />
@@ -207,6 +267,7 @@
     <edmx:ConceptualModels>
       <Schema Namespace="DataBaseForProjectFModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
         <EntityContainer Name="DataBaseForProjectFEntities" annotation:LazyLoadingEnabled="true">
+          <EntitySet Name="ActionLog" EntityType="DataBaseForProjectFModel.ActionLog" />
           <EntitySet Name="Employee" EntityType="DataBaseForProjectFModel.Employee" />
           <EntitySet Name="IncidentRecord" EntityType="DataBaseForProjectFModel.IncidentRecord" />
           <EntitySet Name="IncidentType" EntityType="DataBaseForProjectFModel.IncidentType" />
@@ -214,6 +275,18 @@
           <EntitySet Name="Role" EntityType="DataBaseForProjectFModel.Role" />
           <EntitySet Name="sysdiagrams" EntityType="DataBaseForProjectFModel.sysdiagrams" />
           <EntitySet Name="User" EntityType="DataBaseForProjectFModel.User" />
+          <AssociationSet Name="FK_ActionLog_Employee" Association="DataBaseForProjectFModel.FK_ActionLog_Employee">
+            <End Role="Employee" EntitySet="Employee" />
+            <End Role="ActionLog" EntitySet="ActionLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionLog_IncidentRecord" Association="DataBaseForProjectFModel.FK_ActionLog_IncidentRecord">
+            <End Role="IncidentRecord" EntitySet="IncidentRecord" />
+            <End Role="ActionLog" EntitySet="ActionLog" />
+          </AssociationSet>
+          <AssociationSet Name="FK_ActionLog_User" Association="DataBaseForProjectFModel.FK_ActionLog_User">
+            <End Role="User" EntitySet="User" />
+            <End Role="ActionLog" EntitySet="ActionLog" />
+          </AssociationSet>
           <AssociationSet Name="FK_Employee_Post" Association="DataBaseForProjectFModel.FK_Employee_Post">
             <End Role="Post" EntitySet="Post" />
             <End Role="Employee" EntitySet="Employee" />
@@ -239,6 +312,20 @@
             <End Role="User" EntitySet="User" />
           </AssociationSet>
         </EntityContainer>
+        <EntityType Name="ActionLog">
+          <Key>
+            <PropertyRef Name="Id" />
+          </Key>
+          <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ActionDescription" Type="String" Nullable="false" MaxLength="500" FixedLength="false" Unicode="true" />
+          <Property Name="ActionDate" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Id_User" Type="Int32" Nullable="false" />
+          <Property Name="Id_Incident" Type="Int32" Nullable="false" />
+          <Property Name="Id_employee" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.FK_ActionLog_Employee" FromRole="ActionLog" ToRole="Employee" />
+          <NavigationProperty Name="IncidentRecord" Relationship="DataBaseForProjectFModel.FK_ActionLog_IncidentRecord" FromRole="ActionLog" ToRole="IncidentRecord" />
+          <NavigationProperty Name="User" Relationship="DataBaseForProjectFModel.FK_ActionLog_User" FromRole="ActionLog" ToRole="User" />
+        </EntityType>
         <EntityType Name="Employee">
           <Key>
             <PropertyRef Name="Id" />
@@ -246,6 +333,7 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Name" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Id_Post" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ActionLog" Relationship="DataBaseForProjectFModel.FK_ActionLog_Employee" FromRole="Employee" ToRole="ActionLog" />
           <NavigationProperty Name="Post" Relationship="DataBaseForProjectFModel.FK_Employee_Post" FromRole="Employee" ToRole="Post" />
           <NavigationProperty Name="IncidentRecord" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_Employee" FromRole="Employee" ToRole="IncidentRecord" />
           <NavigationProperty Name="User" Relationship="DataBaseForProjectFModel.User_Employee" FromRole="Employee" ToRole="User" />
@@ -259,6 +347,7 @@
           <Property Name="Description" Type="String" Nullable="false" MaxLength="Max" FixedLength="false" Unicode="true" />
           <Property Name="Id_Employee" Type="Int32" Nullable="false" />
           <Property Name="Id_Type" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ActionLog" Relationship="DataBaseForProjectFModel.FK_ActionLog_IncidentRecord" FromRole="IncidentRecord" ToRole="ActionLog" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_Employee" FromRole="IncidentRecord" ToRole="Employee" />
           <NavigationProperty Name="IncidentType" Relationship="DataBaseForProjectFModel.FK_IncidentRecord_IncidentType" FromRole="IncidentRecord" ToRole="IncidentType" />
         </EntityType>
@@ -306,11 +395,48 @@
           <Property Name="IdRole" Type="Int32" Nullable="false" />
           <Property Name="Password" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
           <Property Name="Login" Type="String" Nullable="false" MaxLength="50" FixedLength="false" Unicode="true" />
-          <Property Name="Id_Post" Type="Int32" />
+          <Property Name="Id_Post" Type="Int32" Nullable="false" />
+          <NavigationProperty Name="ActionLog" Relationship="DataBaseForProjectFModel.FK_ActionLog_User" FromRole="User" ToRole="ActionLog" />
           <NavigationProperty Name="Post" Relationship="DataBaseForProjectFModel.FK_User_Post" FromRole="User" ToRole="Post" />
           <NavigationProperty Name="Role" Relationship="DataBaseForProjectFModel.FK_User_Role" FromRole="User" ToRole="Role" />
           <NavigationProperty Name="Employee" Relationship="DataBaseForProjectFModel.User_Employee" FromRole="User" ToRole="Employee" />
         </EntityType>
+        <Association Name="FK_ActionLog_Employee">
+          <End Type="DataBaseForProjectFModel.Employee" Role="Employee" Multiplicity="1" />
+          <End Type="DataBaseForProjectFModel.ActionLog" Role="ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="Employee">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActionLog">
+              <PropertyRef Name="Id_employee" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionLog_IncidentRecord">
+          <End Type="DataBaseForProjectFModel.IncidentRecord" Role="IncidentRecord" Multiplicity="1" />
+          <End Type="DataBaseForProjectFModel.ActionLog" Role="ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="IncidentRecord">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActionLog">
+              <PropertyRef Name="Id_Incident" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
+        <Association Name="FK_ActionLog_User">
+          <End Type="DataBaseForProjectFModel.User" Role="User" Multiplicity="1" />
+          <End Type="DataBaseForProjectFModel.ActionLog" Role="ActionLog" Multiplicity="*" />
+          <ReferentialConstraint>
+            <Principal Role="User">
+              <PropertyRef Name="Id" />
+            </Principal>
+            <Dependent Role="ActionLog">
+              <PropertyRef Name="Id_User" />
+            </Dependent>
+          </ReferentialConstraint>
+        </Association>
         <Association Name="FK_Employee_Post">
           <End Type="DataBaseForProjectFModel.Post" Role="Post" Multiplicity="1" />
           <End Type="DataBaseForProjectFModel.Employee" Role="Employee" Multiplicity="*" />
@@ -348,7 +474,7 @@
           </ReferentialConstraint>
         </Association>
         <Association Name="FK_User_Post">
-          <End Type="DataBaseForProjectFModel.Post" Role="Post" Multiplicity="0..1" />
+          <End Type="DataBaseForProjectFModel.Post" Role="Post" Multiplicity="1" />
           <End Type="DataBaseForProjectFModel.User" Role="User" Multiplicity="*" />
           <ReferentialConstraint>
             <Principal Role="Post">
@@ -381,6 +507,18 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="Хранилище DataBaseForProjectFModelContainer" CdmEntityContainer="DataBaseForProjectFEntities">
+          <EntitySetMapping Name="ActionLog">
+            <EntityTypeMapping TypeName="DataBaseForProjectFModel.ActionLog">
+              <MappingFragment StoreEntitySet="ActionLog">
+                <ScalarProperty Name="Id_employee" ColumnName="Id_employee" />
+                <ScalarProperty Name="Id_Incident" ColumnName="Id_Incident" />
+                <ScalarProperty Name="Id_User" ColumnName="Id_User" />
+                <ScalarProperty Name="ActionDate" ColumnName="ActionDate" />
+                <ScalarProperty Name="ActionDescription" ColumnName="ActionDescription" />
+                <ScalarProperty Name="Id" ColumnName="Id" />
+              </MappingFragment>
+            </EntityTypeMapping>
+          </EntitySetMapping>
           <EntitySetMapping Name="Employee">
             <EntityTypeMapping TypeName="DataBaseForProjectFModel.Employee">
               <MappingFragment StoreEntitySet="Employee">
