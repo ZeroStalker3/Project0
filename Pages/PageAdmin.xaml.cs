@@ -49,7 +49,7 @@ namespace Project0.Pages
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        {   
             FrameApp.frmObj.Navigate(new IncidentLogger());
         }
 

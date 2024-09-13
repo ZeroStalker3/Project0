@@ -1,4 +1,5 @@
-﻿using Project0.DataBase;
+﻿using Project0.ClassHelper;
+using Project0.DataBase;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -36,6 +37,11 @@ namespace Project0.Pages
 
             // Отображаем данные в DataGrid
             ActionLogDataGrid.ItemsSource = actionLogs;
+        }
+
+        private void Back_Click(object sender, RoutedEventArgs e)
+        {
+            FrameApp.frmObj.GoBack();
         }
     }
 }

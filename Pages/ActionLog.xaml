@@ -8,13 +8,16 @@
       Title="ActionLog">
 
     <Grid>
-        <DataGrid x:Name="ActionLogDataGrid" AutoGenerateColumns="False" CanUserAddRows="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Header="Дата" Binding="{Binding ActionDate}" />
-                <DataGridTextColumn Header="Описание" Binding="{Binding ActionDescription}" />
-                <DataGridTextColumn Header="Пользователь" Binding="{Binding User.UserName}" />
-                <DataGridTextColumn Header="Инцидент" Binding="{Binding Incident.Description}" />
-            </DataGrid.Columns>
-        </DataGrid>
+        <StackPanel>
+            <Button x:Name="Back" HorizontalAlignment="Right" VerticalAlignment="Top" Content="Назад" Width="120" Height="30" Margin="5" Click="Back_Click"/>
+            <DataGrid x:Name="ActionLogDataGrid" AutoGenerateColumns="False" CanUserAddRows="False">
+                <DataGrid.Columns>
+                    <DataGridTextColumn Header="Дата" Binding="{Binding ActionDate}" />
+                    <DataGridTextColumn Header="Описание" Binding="{Binding ActionDescription}" />
+                    <DataGridTextColumn Header="Пользователь" Binding="{Binding User.UserName}" />
+                    <DataGridTextColumn Header="Инцидент" Binding="{Binding Incident.Description}" />
+                </DataGrid.Columns>
+            </DataGrid>
+        </StackPanel>
     </Grid>
 </Page>

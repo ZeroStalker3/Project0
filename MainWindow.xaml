@@ -7,7 +7,7 @@
         mc:Ignorable="d"
          Title="Программа" Height="720" Width="1280"
         WindowStartupLocation="CenterScreen"
-        Background="Transparent">
+        Background="Transparent" KeyDown="Window_KeyDown_1">
     <Border 
         Background="White"
         >

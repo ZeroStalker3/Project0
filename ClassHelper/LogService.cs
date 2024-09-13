@@ -26,7 +26,7 @@ namespace Project0.ClassHelper
             {
                 ActionDate = DateTime.Now,
                 ActionDescription = "Вход в систему",
-                UserId = userId
+                Id_User = userId
             };
 
             OdbConnecHelper.entObj.ActionLog.Add(log);
@@ -37,8 +37,8 @@ namespace Project0.ClassHelper
             var log = new ActionLog
             {
                 ActionDate = DateTime.Now,
-                ActionDescription = "Выход из системы",
-                UserId = userId
+                 ActionDescription = "Выход из системы",
+                Id_User= userId
             };
 
             OdbConnecHelper.entObj.ActionLog.Add(log);
